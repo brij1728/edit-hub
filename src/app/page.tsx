@@ -1,9 +1,9 @@
-import Image from "next/image";
+import { MainContainer } from '@/components';
 
 export default function Home() {
   return (
     <div>
-      <p className="text-base font-bold text-purple-500">Edit Hub</p>
+      <MainContainer />
     </div>
   );
 }
