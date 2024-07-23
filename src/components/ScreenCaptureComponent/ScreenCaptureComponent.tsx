@@ -1,8 +1,26 @@
+'use client';
+
 import React, { useState } from 'react';
 
 import Image from 'next/image';
 
-export const ScreenCaptureComponent: React.FC = () => {
+interface TextElement {
+  id: number;
+  text: string;
+  font: string;
+  size: number;
+  color: string;
+}
+
+interface ScreenCaptureComponentProps {
+  textElements: TextElement[];
+  removeTextElement: (id: number) => void;
+}
+
+export const ScreenCaptureComponent: React.FC<ScreenCaptureComponentProps> = ({
+  textElements,
+  removeTextElement,
+}) => {
   const [image, setImage] = useState<string | null>(null);
   const [imageDimensions, setImageDimensions] = useState<{
     width: number;
@@ -30,15 +48,32 @@ export const ScreenCaptureComponent: React.FC = () => {
   };
 
   return (
-    <div className='flex flex-col justify-center items-center h-full'>
+    <div className='relative flex flex-col justify-center items-center h-full'>
       {image && imageDimensions ? (
-        <Image
-          src={image}
-          alt='Uploaded'
-          width={imageDimensions.width}
-          height={imageDimensions.height}
-          className='max-w-full max-h-full'
-        />
+        <div className='relative'>
+          <Image
+            src={image}
+            alt='Uploaded'
+            width={imageDimensions.width}
+            height={imageDimensions.height}
+            className='max-w-full max-h-full'
+          />
+          {textElements.map(element => (
+            <div
+              key={element.id}
+              style={{
+                position: 'absolute',
+                fontFamily: element.font,
+                fontSize: `${element.size}px`,
+                color: element.color,
+                cursor: 'pointer',
+              }}
+              onClick={() => removeTextElement(element.id)}
+            >
+              {element.text}
+            </div>
+          ))}
+        </div>
       ) : (
         <p>Screen Capture Component (Placeholder)</p>
       )}

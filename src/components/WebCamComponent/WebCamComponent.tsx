@@ -1,7 +1,7 @@
 import React from 'react';
 import Webcam from 'react-webcam';
 
-export const WebcamComponent: React.FC = () => {
+export const WebCamComponent: React.FC = () => {
   const webcamRef = React.useRef<Webcam>(null);
 
   return (
